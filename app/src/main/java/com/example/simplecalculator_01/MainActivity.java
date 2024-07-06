@@ -1,4 +1,4 @@
-package com.example.SimpleCalculator_01;
+package com.example.simplecalculator_01;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,50 +7,51 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.simplecalculator_01.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText editTextNumber1, editTextNumber2;
-    private TextView textViewResult;
-    private Button buttonAdd, buttonSubtract, buttonMultiply, buttonDivide;
+    private EditText etFirstNumber, etSecondNumber;
+    private Button btnAdd, btnSubtract, btnMultiply, btnDivide;
+    private TextView tvResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        editTextNumber1 = findViewById(R.id.editTextNumber1);
-        editTextNumber2 = findViewById(R.id.editTextNumber2);
-        textViewResult = findViewById(R.id.textViewResult);
-        buttonAdd = findViewById(R.id.buttonAdd);
-        buttonSubtract = findViewById(R.id.buttonSubtract);
-        buttonMultiply = findViewById(R.id.buttonMultiply);
-        buttonDivide = findViewById(R.id.buttonDivide);
+        etFirstNumber = findViewById(R.id.etFirstNumber);
+        etSecondNumber = findViewById(R.id.etSecondNumber);
+        btnAdd = findViewById(R.id.btnAdd);
+        btnSubtract = findViewById(R.id.btnSubtract);
+        btnMultiply = findViewById(R.id.btnMultiply);
+        btnDivide = findViewById(R.id.btnDivide);
+        tvResult = findViewById(R.id.tvResult);
 
-        buttonAdd.setOnClickListener(new View.OnClickListener() {
+        btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 calculate('+');
             }
         });
 
-        buttonSubtract.setOnClickListener(new View.OnClickListener() {
+        btnSubtract.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 calculate('-');
             }
         });
 
-        buttonMultiply.setOnClickListener(new View.OnClickListener() {
+        btnMultiply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 calculate('*');
             }
         });
 
-        buttonDivide.setOnClickListener(new View.OnClickListener() {
+        btnDivide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 calculate('/');
@@ -59,38 +60,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void calculate(char operator) {
-        String number1 = editTextNumber1.getText().toString();
-        String number2 = editTextNumber2.getText().toString();
+        String firstNumberStr = etFirstNumber.getText().toString();
+        String secondNumberStr = etSecondNumber.getText().toString();
 
-        if (number1.isEmpty() || number2.isEmpty()) {
-            textViewResult.setText("Please enter numbers in both fields");
+        if (firstNumberStr.isEmpty() || secondNumberStr.isEmpty()) {
+            Toast.makeText(this, "Please enter both numbers", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        double num1 = Double.parseDouble(number1);
-        double num2 = Double.parseDouble(number2);
+        double firstNumber = Double.parseDouble(firstNumberStr);
+        double secondNumber = Double.parseDouble(secondNumberStr);
         double result = 0;
 
         switch (operator) {
             case '+':
-                result = num1 + num2;
+                result = firstNumber + secondNumber;
                 break;
             case '-':
-                result = num1 - num2;
+                result = firstNumber - secondNumber;
                 break;
             case '*':
-                result = num1 * num2;
+                result = firstNumber * secondNumber;
                 break;
             case '/':
-                if (num2 != 0) {
-                    result = num1 / num2;
+                if (secondNumber != 0) {
+                    result = firstNumber / secondNumber;
                 } else {
-                    textViewResult.setText("Cannot divide by zero");
+                    Toast.makeText(this, "Cannot divide by zero", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 break;
         }
 
-        textViewResult.setText("Result: " + result);
+        tvResult.setText(String.valueOf(result));
     }
 }
